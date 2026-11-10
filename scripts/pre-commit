@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Running pre-commit checks..."
+
+echo "→ TypeScript check..."
+pnpm check || { echo "❌ TypeScript check failed!"; exit 1; }
+
+echo "→ Linting..."
+pnpm lint || { echo "❌ Linting failed!"; exit 1; }
+
+echo "→ Running tests..."
+pnpm test || { echo "❌ Tests failed!"; exit 1; }
+
+echo "✅ All checks passed!"
