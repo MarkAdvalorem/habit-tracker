@@ -4,6 +4,15 @@ Application mobile de suivi d'habitudes, **100% hors-ligne** : aucun compte, auc
 
 Expo 54 · React Native 0.81 · TypeScript · NativeWind · Expo Router · Vitest
 
+**[Site de présentation](https://habit-tracker-site-sable.vercel.app)** · **[Démo en ligne](https://habit-tracker-site-sable.vercel.app/demo/)** · **[Télécharger l'APK Android](https://github.com/MarkAdvalorem/habit-tracker/releases/latest/download/habit-tracker.apk)**
+
+<p align="center">
+  <img src="docs/screenshots/home.jpg" width="200" alt="Accueil" />
+  <img src="docs/screenshots/statistics.jpg" width="200" alt="Statistiques" />
+  <img src="docs/screenshots/detail.jpg" width="200" alt="Détail d'une habitude" />
+  <img src="docs/screenshots/add-habit.jpg" width="200" alt="Création d'une habitude" />
+</p>
+
 ## ✨ Fonctionnalités
 
 - **Habitudes** : création / édition / archivage, 8 catégories, fréquences (quotidienne à mensuelle), couleur, icône, notes par complétion, réordonnancement par glisser-déposer
