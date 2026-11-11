@@ -113,6 +113,8 @@ const config: ExpoConfig = {
   experiments: {
     typedRoutes: true,
     reactCompiler: true,
+    // Lets the web build live under a sub-path, e.g. EXPO_BASE_URL=/demo for the showcase site
+    baseUrl: process.env.EXPO_BASE_URL,
   },
 };
 
