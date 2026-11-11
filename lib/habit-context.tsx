@@ -149,6 +149,7 @@ export function HabitProvider({ children }: { children: React.ReactNode }) {
     if (!current) return;
     const updatedHabit = { ...current, ...updates };
     setAllHabits(prev => prev.map(h => (h.id === id ? { ...h, ...updates } : h)));
+    if (!updatedHabit.habitStartTime) await cancelHabitNotification(id);
     if (!updatedHabit.archivedAt) {
       await scheduleHabitNotification(updatedHabit);
       await scheduleHabitEndNotification(updatedHabit);

@@ -7,7 +7,7 @@
 ## Fonctionnalités en place
 
 - [x] Liste des habitudes, toggle de complétion, streaks, salutation + date du jour
-- [x] Création / édition / suppression d'habitudes (catégories, couleurs, icônes, fréquences, plages horaires)
+- [x] Création / édition / suppression d'habitudes (catégories, couleurs, icônes, fréquences, plage horaire optionnelle)
 - [x] Détail d'une habitude : calendrier mensuel, édition des jours passés, notes par complétion
 - [x] Statistiques : globales, graphique mensuel, comparaison hebdo, heatmap annuelle, classement, filtres de période
 - [x] Badges et confettis
@@ -47,6 +47,15 @@
 - [x] ESLint : 0 erreur, 0 avertissement
 - [x] Tests : 130 passés
 
+## Sprint 55 — Sélecteur d'heure et plage horaire optionnelle — **COMPLÉTÉ**
+
+- [x] Sélecteur d'heure : les colonnes heure / minute restent alignées après défilement (`snapToInterval` + recalage sur le web)
+- [x] Plage horaire : suppression du double espace dans « 12:00 -  10:00 »
+- [x] Interrupteur « Plage horaire » sur la création / édition d'habitude (même style que le mode vacances)
+- [x] Habitude sans heure : section « Non planifié » sur l'accueil, jamais en retard, aucun rappel
+- [x] Retirer l'heure d'une habitude existante annule ses rappels programmés
+- [x] Tests manuels validés
+
 ## À faire
 
 ### Données
@@ -55,12 +64,12 @@
 - [ ] Test du `HabitProvider` réel (chargement / persistance AsyncStorage) — les tests actuels testent la logique copiée, pas le provider
 
 ### Tests manuels
-- [ ] Mode avion : créer, cocher, archiver, redémarrer l'app → tout est conservé
-- [ ] Notifications locales sur iOS et Android (appareil réel)
-- [ ] Traductions sur tous les écrans
-- [ ] Différentes tailles d'écran
-- [ ] Accessibilité
-- [ ] Performances avec beaucoup d'habitudes / un long historique
+- [x] Mode avion : créer, cocher, archiver, redémarrer l'app → tout est conservé
+- [x] Notifications locales sur iOS et Android (appareil réel)
+- [x] Traductions sur tous les écrans
+- [x] Différentes tailles d'écran
+- [x] Accessibilité
+- [x] Performances avec beaucoup d'habitudes / un long historique
 
 ### Documentation et déploiement
 - [x] Docs obsolètes (`SETUP_LOCAL.md`, `INSTALLATION_RAPIDE.md`) supprimées, section Supabase retirée d'`APK_BUILD_GUIDE.md`

@@ -33,6 +33,7 @@ export default function AddHabitScreen() {
   const [description, setDescription] = useState('');
   const [habitStartTime, setHabitStartTime] = useState('09:00');
   const [habitEndTime, setHabitEndTime] = useState('10:00');
+  const [hasTime, setHasTime] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -53,6 +54,7 @@ export default function AddHabitScreen() {
         setDescription(habit.description || '');
         setHabitStartTime(habit.habitStartTime || '09:00');
         setHabitEndTime(habit.habitEndTime || '10:00');
+        setHasTime(!!habit.habitStartTime);
       }
     }
   }, [habitId, habits]);
@@ -70,7 +72,7 @@ export default function AddHabitScreen() {
     const startTotalMin = startHour * 60 + startMin;
     const endTotalMin = endHour * 60 + endMin;
 
-    if (startTotalMin >= endTotalMin) {
+    if (hasTime && startTotalMin >= endTotalMin) {
       newErrors.habitEndTime = 'L\'heure de fin doit être après l\'heure de début';
     }
 
@@ -113,8 +115,8 @@ export default function AddHabitScreen() {
           color,
           description,
           icon,
-          habitStartTime,
-          habitEndTime,
+          habitStartTime: hasTime ? habitStartTime : undefined,
+          habitEndTime: hasTime ? habitEndTime : undefined,
         });
       } else {
         await addHabit({
@@ -124,8 +126,8 @@ export default function AddHabitScreen() {
           color,
           description,
           icon,
-          habitStartTime,
-          habitEndTime,
+          habitStartTime: hasTime ? habitStartTime : undefined,
+          habitEndTime: hasTime ? habitEndTime : undefined,
         });
       }
 
@@ -316,7 +318,23 @@ export default function AddHabitScreen() {
 
         {/* Habit Time Selection */}
         <View className="mb-8">
-          <Text className="text-sm font-semibold text-foreground mb-3">{t('addHabit.habitTimeRange')}</Text>
+          <TouchableOpacity
+            onPress={() => setHasTime(!hasTime)}
+            accessibilityRole="switch"
+            accessibilityState={{ checked: hasTime }}
+            className="bg-surface rounded-lg p-4 border border-border mb-3"
+          >
+            <View className="flex-row items-center justify-between">
+              <Text className="text-foreground font-semibold flex-1">{t('addHabit.habitTimeRange')}</Text>
+              <View className={`w-12 h-7 rounded-full justify-center px-1 ${hasTime ? 'bg-success' : 'bg-border'}`}>
+                <View
+                  className="w-5 h-5 rounded-full bg-white"
+                  style={{ transform: [{ translateX: hasTime ? 20 : 0 }] }}
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
+          {hasTime && (<>
           <TouchableOpacity
             onPress={() => setShowTimeModal(true)}
             className="bg-surface border border-border rounded-lg p-4"
@@ -329,6 +347,7 @@ export default function AddHabitScreen() {
           <Text className="text-xs text-muted mt-2">
             {t('addHabit.reminderInfo')}
           </Text>
+          </>)}
 
           {/* Time Range Modal */}
           <TimeRangeModal

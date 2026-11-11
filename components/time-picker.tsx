@@ -22,6 +22,16 @@ export function TimePicker({ hour, minute, onTimeChange }: TimePickerProps) {
 
   const [selectedHour, setSelectedHour] = useState(hour);
   const [selectedMinute, setSelectedMinute] = useState(minute);
+  const snapTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  // Re-align to the nearest item once scrolling stops (web has no native snapping)
+  const snapWhenIdle = (key: string, ref: React.RefObject<FlatList | null>, offsetY: number) => {
+    clearTimeout(snapTimers.current[key]);
+    snapTimers.current[key] = setTimeout(() => {
+      const target = Math.round(offsetY / itemHeight) * itemHeight;
+      if (target !== offsetY) ref.current?.scrollToOffset({ offset: target, animated: true });
+    }, 120);
+  };
 
   // Scroll to initial value on mount
   useEffect(() => {
@@ -33,6 +43,7 @@ export function TimePicker({ hour, minute, onTimeChange }: TimePickerProps) {
 
   const handleHourScroll = (event: any) => {
     const offsetY = event.nativeEvent.contentOffset.y;
+    snapWhenIdle('h', hourListRef, offsetY);
     const index = Math.round(offsetY / itemHeight);
     if (index >= 0 && index < 24 && index !== selectedHour) {
       setSelectedHour(index);
@@ -42,6 +53,7 @@ export function TimePicker({ hour, minute, onTimeChange }: TimePickerProps) {
 
   const handleMinuteScroll = (event: any) => {
     const offsetY = event.nativeEvent.contentOffset.y;
+    snapWhenIdle('m', minuteListRef, offsetY);
     const index = Math.round(offsetY / itemHeight);
     if (index >= 0 && index < 60 && index !== selectedMinute) {
       setSelectedMinute(index);
@@ -112,7 +124,7 @@ export function TimePicker({ hour, minute, onTimeChange }: TimePickerProps) {
               renderItem={({ item }) => renderItem(item, item === selectedHour, 'hour')}
               keyExtractor={(i) => `h-${i}`}
               showsVerticalScrollIndicator={false}
-              snapToAlignment="start"
+              snapToInterval={itemHeight}
               decelerationRate="fast"
               onScroll={handleHourScroll}
               scrollEventThrottle={16}
@@ -138,7 +150,7 @@ export function TimePicker({ hour, minute, onTimeChange }: TimePickerProps) {
               renderItem={({ item }) => renderItem(item, item === selectedMinute, 'minute')}
               keyExtractor={(i) => `m-${i}`}
               showsVerticalScrollIndicator={false}
-              snapToAlignment="start"
+              snapToInterval={itemHeight}
               decelerationRate="fast"
               onScroll={handleMinuteScroll}
               scrollEventThrottle={16}

@@ -64,6 +64,8 @@ export function calculateEndNotificationTime(habitEndTime: string): { hours: num
  */
 export async function scheduleHabitNotification(habit: Habit): Promise<string | null> {
   try {
+    if (!habit.habitStartTime) return null;
+
     // Vérifier les permissions
     const hasPermission = await checkNotificationPermissions();
     if (!hasPermission) {
@@ -72,7 +74,7 @@ export async function scheduleHabitNotification(habit: Habit): Promise<string | 
     }
 
     // Calculer l'heure de notification (15 minutes avant)
-    const notificationTime = calculateNotificationTime(habit.habitStartTime || '09:00');
+    const notificationTime = calculateNotificationTime(habit.habitStartTime);
     if (!notificationTime) {
       console.warn('Invalid habit start time:', habit.habitStartTime);
       return null;

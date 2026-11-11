@@ -115,7 +115,7 @@ export function TimeRangeModal({ visible, onClose, onConfirm, initialStartTime =
           <View style={{ backgroundColor: isInvalid ? '#FEF2F2' : colors.primary + '1A', borderRadius: 8, padding: 16, alignItems: 'center', borderWidth: 1, borderColor: isInvalid ? '#EF4444' : colors.primary, marginBottom: 24 }}>
             <Text style={{ fontSize: 12, color: isInvalid ? '#EF4444' : colors.muted, marginBottom: 4 }}>{t('addHabit.selectedRange')}</Text>
               <Text style={{ fontSize: 32, fontWeight: 'bold', color: isInvalid ? '#EF4444' : colors.primary }}>
-              {String(startHour).padStart(2, '0')}:{String(startMinute).padStart(2, '0')} - {' '}
+              {String(startHour).padStart(2, '0')}:{String(startMinute).padStart(2, '0')} -{' '}
               {String(endHour).padStart(2, '0')}:{String(endMinute).padStart(2, '0')}
             </Text>
             {isInvalid && (
